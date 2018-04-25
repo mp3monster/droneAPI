@@ -36,7 +36,7 @@ http://developer.parrot.com/docs/SDK3/#discover-the-drones
                 
 + Response 500
                 
-## Simple Yaw Movement [/drone/{droneId}/simplenav/rotation/{rotationValue}]
+## Simple Yaw Movement [/drone/{droneId}/simplenav/yaw/{yawValue}]
 Movement provided by the URI as a simple operation one one axis can be controlled rotation.
 
 ### Change Yaw [PUT]
@@ -54,7 +54,7 @@ will make the drone change its rotation value in the range of -100 to 100
 
         + Sample: 1
         
-    + rotationValue (number, required)
+    + yawValue (number, required)
     
         + Sample: 10
 
