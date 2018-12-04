@@ -14,7 +14,7 @@ As it is possible for an API call to be received whilst handling an existing API
 The APIs will be implemented progressively - for APIs not yet implemented an HTTP response of 501 will be returned 
 
 ## Register Drone [/drone/register]
-Tell the microservices about the drone, so we can correlate Id to the correct drone
+Tell the backend about the drone, so we can correlate Id to the correct drone
 
 ### Register [GET]
 Triggers the process of locating drones. This then returns the drones and their identifiers
@@ -35,6 +35,7 @@ http://developer.parrot.com/docs/SDK3/#discover-the-drones
                 + droneDescription: droneInfo (string) - details of the drone located
                 
 + Response 500
+
                 
 ## Simple Yaw Movement [/drone/{droneId}/simplenav/yaw/{yawValue}]
 Movement provided by the URI as a simple operation one one axis can be controlled rotation.
@@ -143,7 +144,7 @@ will make the drone change its yaw value
 ## Combined Movement [/drone/{droneId}/move]
 
 ### Move Drone [PUT]
-Returns all MRA Artists that match the specified criteria.
+Instrust the drone to move. Unlike the move on axis, this allows the movement to be defined multiple axis
 
 + Request (application/json)
 
@@ -158,37 +159,11 @@ Returns all MRA Artists that match the specified criteria.
 
 + Response 200 (text/plain)                
 
-+ Response 409 (text/plain)
-
-
-## Flight Movement [/drone/{droneId}/nav/move]
-Movement commands based telling the drone what angles of yaw, role and rotation etc to use.
-
-+ Parameters
-
-    + droneId (string, required)
-
-        + Sample: 1
-    
-### Move Drone [PUT]
-Returns all MRA Artists that match the specified criteria.
-
-+ Request (application/json)
-
-    + Headers
-
-            api-key: ac108161-d3a5-427d-b814-ff977728395b (String)
-            droneId: 1234
-
-    + Attributes
+        The standard success response
         
-        + movement (Move)
-
-+ Response 200 (text/plain)
-
 + Response 409 (text/plain)
 
-+ Response 501 (text/plain) 
+        The 409 response reflects that the drone can't be commanded in this way.  This maybe down to the drone status is not ready to consume a move, for example it hasn't taken off yet.  If the drone is contactable then this error code is returned
 
 
 ## Flight Movement by Location [/drone/{droneId}/nav/move-to]
@@ -201,7 +176,7 @@ Controlling drones can also be achieved by telling a drone a location to fly to 
         + Sample: 1
 
 ### Move Drone To [PUT]
-Returns all MRA Artists that match the specified criteria.
+Rather than providing instructions to the drone on changing is angles etc. This accepts a set of coordinates and the drone will be piloted to that location and then hover at that altitude.
 
 + Request (application/json)
 
@@ -212,6 +187,8 @@ Returns all MRA Artists that match the specified criteria.
     + Attributes
 
         + goTo (Location)
+
+            Provide the location as a position
 
 + Response 200 (text/plain)
 
@@ -252,6 +229,7 @@ Perform a specific action
 + Response 501 (text/plain)
 
 ## Flight Tricks [/drone/{droneId}/nav/tricks]
+Perform the flight tricks that the drones can provide such as flips etc
 
 + Parameters
 
@@ -260,7 +238,7 @@ Perform a specific action
         + Sample: 1
 
 ### Command Drone [PUT]
-Some drones are capable of performing predefined tricks. This API allows us to perform those tricks
+The command drone is a posat.
 
 + Request (application/json)
 
